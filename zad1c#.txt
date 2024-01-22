@@ -1,0 +1,30 @@
+using System;
+using System.Text;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string plainText = "Hello, world!";
+        string encryptedText = Encrypt(plainText);
+        string decryptedText = Decrypt(encryptedText);
+
+        Console.WriteLine("Plain text: " + plainText);
+        Console.WriteLine("Encrypted text: " + encryptedText);
+        Console.WriteLine("Decrypted text: " + decryptedText);
+    }
+
+    static string Encrypt(string plainText)
+    {
+        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+        string encryptedText = Convert.ToBase64String(plainTextBytes);
+        return encryptedText;
+    }
+
+    static string Decrypt(string encryptedText)
+    {
+        byte[] encryptedTextBytes = Convert.FromBase64String(encryptedText);
+        string plainText = Encoding.UTF8.GetString(encryptedTextBytes);
+        return plainText;
+    }
+}

@@ -1,0 +1,41 @@
+
+
+using System;
+using System.Linq;
+using System.Security.Cryptography;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine(CreatePassword());
+    }
+
+    public static string CreatePassword()
+    {
+        const string lower = "abcdefghijklmnopqrstuvwxyz";
+        const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string digits = "0123456789";
+        const string special = "!@#$%^&*()_+-=[]{}|;':\",./<>?\\";
+        const string dictionary = "dictionary_word";
+
+        var chars = lower + upper + digits + special;
+        var random = new Random();
+
+        while (true)
+        {
+            var password = new string(Enumerable.Repeat(chars, 8)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            if (password.Length >= 8
+                && password.Any(c => lower.Contains(c))
+                && password.Any(c => upper.Contains(c))
+                && password.Any(c => digits.Contains(c))
+                && password.Any(c => special.Contains(c))
+                && !password.Contains(dictionary))
+            {
+                return password;
+            }
+        }
+    }
+}
